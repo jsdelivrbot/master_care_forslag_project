@@ -1,0 +1,80 @@
+﻿@model Master_Care_Forslag.Models.HomeViewModel
+
+@{
+    ViewBag.Title = "Om master care";
+}
+
+<div class="main_section-slider-container">
+    <div class="main_section-slideshow">
+        <img src="~/Content/Img/overflytnings-hjaelpemidler-1500x430.jpg" alt="Alternative Text" />
+        <div class="main_section-slideshow-caption container responsive m-auto">
+            <h2>@ViewBag.Title</h2>
+        </div>
+    </div>
+</div>
+<div class="sub_nav-container">
+    <div class="sub_nav">
+        <nav class="m-auto responsive">
+            <ul class="clearfix flex flex-wrap">
+                <li><a href="#">@ViewBag.Title</a></li>
+                <li><a href="#">Mission & vission</a></li>
+                <li><a href="#">Egenproduktion</a></li>
+                <li><a href="#">Jobs</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<div class="container responsive m-auto">
+    <div class="main_section">
+        <div class="main_section_about-container">
+            @foreach (var item in Model.TekstList)
+            {
+                <div class="main_section_about-container-info">
+                    <div style="text-align: center;">
+                        <h1>@item.Overskrift</h1>
+                        <hr class="hr-general hr-general-orange">
+                    </div>
+                    <p style="white-space: pre-line;line-height:150%;">@item.Tekst</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div>
+    <form action="/" method="post">
+        <textarea id="mytinymce"></textarea>
+    </form>
+</div>
+
+<script>
+    var subnav = $(".sub_nav");
+    var subnavcontainer = $(".sub_nav-container");
+
+
+    $(window).on('scroll', function () {
+        var scrollTop = $(window).scrollTop(),
+            elementOffset = $('.sub_nav-container').offset().top,
+            distance = (elementOffset - scrollTop);
+        var headerheight = $("#header-wrap").outerHeight();
+        var containerheight = $(".sub_nav").outerHeight();
+
+        if (distance - headerheight <= 0) {
+            subnav.addClass("fixed");
+            subnavcontainer.css("height", containerheight);
+        }
+        else {
+            subnav.removeClass("fixed");
+            subnavcontainer.css("height", "100%");
+        }
+    });
+
+    $(document).on('click', 'a[href^="#"]', function (event) {
+        event.preventDefault();
+        var containerheight = $(".sub_nav").outerHeight();
+        var headerheight = $("#header-wrap").outerHeight();
+
+        $('html, body').animate({
+            scrollTop: $($.attr(this, 'href')).offset().top - containerheight - headerheight
+        }, 500);
+    });
+</script>

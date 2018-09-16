@@ -1,0 +1,113 @@
+﻿@model Master_Care_Forslag.Models.HomeViewModel
+
+@{
+    ViewBag.Title = Model.Category.KategoriNavn;
+}
+
+<div class="m-auto responsive">
+    <div class="main_section">
+        <div class="main_section_categories">
+            <div class="main_section_categories-container">
+                <figure class="main_section_categories-container-figure">
+                    <a href="/human-handling-bank/@Model.Category.KategoriUrl/alle-produkter">
+                        <img src="~/Content/Img/@Model.Category.KategoriIkon" alt="@Model.Category.KategoriNavn" />
+                        <h1 class="h1-cat-tag m-top-50">@Model.Category.KategoriNavn</h1>
+                    </a>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sub_nav-container">
+    <div class="sub_nav">
+        <nav class="m-auto responsive">
+            <ul class="clearfix flex flex-wrap">
+                @foreach (var item in Model.SubCategoryList)
+                {
+                    <li>
+                        <a href="#@item.ID">@item.UnderKategoriNavn</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>
+<div class="video_section">
+    @foreach (var item in Model.SubCategoryList)
+    {
+        <div class="main_section_video-container" id="@item.ID">
+            <div class="main_section_video-container-wrapper m-auto responsive grid">
+                <div class="main_section_video-container-info">
+                    <h3 class="m-bot-20 m-top-20">@item.UnderKategoriNavn</h3>
+                    <iframe src="https://player.vimeo.com/video/213990174?title=0&byline=0&portrait=0" width="345" height="194" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    <div class="m-top-30 m-bot-50">
+                        <a href="/human-handling-bank/@item.Kategori.KategoriUrl/@item.UnderKategoriUrl" class="btn"><i class="icon-basket"></i>Vis alle kategoriens produkter</a>
+                    </div>
+                </div>
+                <div class="main_section_video-container-info">
+                    <p>@item.UnderKategoriTekst</p>
+                </div>
+                <div class="main_section_video-container-info"></div>
+            </div>
+        </div>
+
+    }
+</div>
+<script>
+    var subnav = $(".sub_nav");
+    var subnavcontainer = $(".sub_nav-container");
+
+
+    $(window).on('scroll', function () {
+        var scrollTop = $(window).scrollTop(),
+            elementOffset = $('.sub_nav-container').offset().top,
+            distance = (elementOffset - scrollTop);
+        var headerheight = $("#header-wrap").outerHeight();
+        var containerheight = $(".sub_nav").outerHeight();
+
+        if (distance - headerheight <= 0) {
+            subnav.addClass("fixed");
+            subnavcontainer.css("height", containerheight);
+        }
+        else {
+            subnav.removeClass("fixed");
+            subnavcontainer.css("height", "100%");
+        }
+    });
+    
+    $(document).on('click', 'a[href^="#"]', function (event) {
+        event.preventDefault();
+        var containerheight = $(".sub_nav").outerHeight();
+        var headerheight = $("#header-wrap").outerHeight();
+
+        $('html, body').animate({
+            scrollTop: $($.attr(this, 'href')).offset().top - containerheight - headerheight
+        }, 500);
+    });
+
+        //$(document).ready(function () {
+    //    fixed();
+    //});
+
+    //$(window).scroll(function () {
+    //    fixed();
+    //});
+
+    //var subnav = $(".sub_nav");
+    //var subnavcontainer = $(".sub_nav-container");
+    //var sticky = subnav.offset().top;
+    //var containerheight = $(".sub_nav").outerHeight();
+
+    //function fixed() {
+
+    //    if (($(window).scrollTop() - 125) >= sticky) {
+    //        subnav.addClass("fixed");
+    //        subnavcontainer.css("height", containerheight);
+    //    }
+    //    else {
+    //        subnav.removeClass("fixed");
+    //        subnavcontainer.css("height", "100%");
+    //    }
+
+    //}
+</script>

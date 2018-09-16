@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+
+<html lang="da">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>@ViewBag.Title - master care A/S</title>
+
+    <script src="~/Content/Script/jquery.js"></script>
+    <script src="~/Content/Script/jquery.imageScroll.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#search-btn").click(function () {
+                if ($("div#search_container").hasClass("show")) {
+                    $("div#search_container").removeClass("show").fadeOut();
+                }
+                else {
+                    $("div#search_container").addClass("show");
+                    $("div#search_container").fadeIn();
+                }
+            });
+
+        })
+    </script>
+    @*<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">*@
+    <link href="~/Content/Fonts/fontello-1f36ded6/css/fontello.css" rel="stylesheet" />
+    <link href="~/Style/main.css" rel="stylesheet" />
+    <link rel="icon" type="img/ico" href="~/Content/Img/favicons/favicon.png">
+</head>
+<body>
+    <div id="wrapper">
+        <header>
+            <div id="header-wrap">
+                <div id="logo_container-wrap">
+                    <div id="logo_container" class="container m-auto responsive">
+                        <div>
+                            <a href="/">
+                                <img src="~/Content/Img/mastercare-logo.png" alt="Master Care" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="nav_container">
+                    @Html.Action("Navigation")
+                </div>
+            </div>
+        </header>
+        <main>
+            @RenderBody()
+        </main>
+        <footer>
+            <div id="info_container" class="container m-auto grid responsive">
+                <div class="info_container-box">
+                    <h3 class="b-top-bottom">OM MASTER CARE A/S</h3>
+                    <p>
+                        – Danmarks førende udvikler af forflytnings- og aktiveringshjælpemidler
+
+                        – Egen produktion i DK og EU
+
+                        – Vi tilbyder unikke løsninger i samarbejde med dig
+                    </p>
+                </div>
+                <div class="info_container-box">
+                    <h3 class="b-top-bottom">KONTAKT OS</h3>
+                    <p>
+                        master care A/S
+                        Sofienlystvej 3
+                        DK-8340 Malling
+
+                        Tlf.: +45 86 93 85 85
+                        info@master-care.dk
+
+                        CVR: 36941022
+                    </p>
+                </div>
+                <div class="info_container-box">
+                    <h3 class="b-top-bottom">BETALLING FOR PRIVATE KUNDER</h3>
+                    <img src="~/Content/Img/mobilepay_logo.png" alt="Betal med MobilePay på 37918" />
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

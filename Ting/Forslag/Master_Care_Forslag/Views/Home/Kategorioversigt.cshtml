@@ -1,0 +1,23 @@
+﻿@model Master_Care_Forslag.Models.HomeViewModel
+
+@{
+    ViewBag.Title = "Human Handling Bank";
+}
+
+<div class="m-auto responsive">
+    <div class="main_section">
+        <div class="main_section_categories grid">
+            @foreach (var item in Model.CategoryList)
+            {
+                <div class="main_section_categories-container">
+                    <figure class="main_section_categories-container-figure">
+                        <a href="/human-handling-bank/@item.KategoriUrl">
+                            <img src="~/Content/Img/@item.KategoriIkon" alt="@item.KategoriNavn" />
+                            <p class="m-top-10">@item.KategoriNavn</p>
+                        </a>
+                    </figure>
+                </div>
+            }
+        </div>
+    </div>
+</div>

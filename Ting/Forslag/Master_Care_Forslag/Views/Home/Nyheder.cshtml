@@ -1,0 +1,56 @@
+﻿@model Master_Care_Forslag.Models.HomeViewModel
+
+@{
+    ViewBag.Title = "Nyheder";
+}
+
+<div class="m-auto responsive container">
+    <div class="main_section">
+            <div class="main_section_news flex">
+                <div class="main_section_news-container flex-grow" style="border-right: 1px solid #e1e1e1; padding-right: 50px;">
+                    <div class="main_section_news_header">
+                        <h3>Nyheder</h3>
+                        <hr class="hr-general hr-general-grey">
+                    </div>
+                    @foreach (var item in Model.NewsList)
+                    {
+                        <div class="main_section_news-container-bottom-box">
+                            <a href="@item.NyhedsUrl">
+                                <img src="~/Content/Img/@item.NyhedsImg" alt="@item.NyhedsNavn" />
+                            </a>
+                            <div></div>
+                            <a href="/nyheder" class="m-bot-10 m-top-20 news_link">NYHEDER</a>
+                            <h3>
+                                <a href="@item.NyhedsUrl" class="news_link_specific">@item.NyhedsNavn</a>
+                            </h3>
+                            <hr class="hr-general hr-general-grey" />
+                            <p>@item.NyhedsTekst</p>
+                            <div class="main_section_news-container-bottom-time b-top-bottom">
+                                <p style="text-align: center;text-transform: uppercase; border-right: 1px solid #e1e1e1;">@item.NyhedsDato.ToString("d.MMMM yyyy")</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div style="text-align: left; padding-left: 50px;">
+                    <h3 class="b-top-bottom" style="border-color: #e1e1e1;">Kontakt</h3>
+                    <p style="white-space: pre-line;">
+                        Adresse
+                        master care A/S
+                        Sofienlystvej 3
+                        DK-8340 Malling
+
+                        CVR: 36941022
+
+                        Telefon
+                        +45 86 93 85 85
+
+                        Åbningstider
+
+                        Mandag-torsdag: 08.00-16.00
+                        Fredag: 08.00-13.00
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+

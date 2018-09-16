@@ -1,0 +1,83 @@
+﻿@model Master_Care_Forslag.Models.HomeViewModel
+
+@{
+    ViewBag.Title = "Forside";
+}
+
+<script>
+    $(window).bind('scroll', function (e) {
+        parallaxScroll();
+    });
+
+    function parallaxScroll() {
+        var scrolled = $(window).scrollTop();
+        $('.news_banner-parallax').css('background-position-y', (0 - (scrolled * .15)) + 'px');
+    }
+</script>
+
+<div class="m-auto responsive container">
+    <div class="main_section">
+        <div class="main_section_categories grid">
+            @foreach (var item in Model.CategoryList)
+            {
+                <div class="main_section_categories-container">
+                    <figure class="main_section_categories-container-figure">
+                        <a href="@Url.Action("Kategori", "Home", new { id = item.KategoriUrl })">
+                            <img src="~/Content/Img/@item.KategoriImg" alt="@item.KategoriNavn" />
+                            <figcaption>@item.KategoriNavn</figcaption>
+                        </a>
+                    </figure>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="news_banner">
+    <div class="news_banner-parallax"></div>
+    <div class="news_banner_info-container m-auto responsive container flex">
+        <div class="news_banner_info-container-box">
+            <a href="#" download="">Se katalog</a>
+            <br />
+            <a href="/kontakt">Bliv ringet op</a>
+        </div>
+        <div class="news_banner_info-container-box">
+            <p>
+                Se vores katalog og få et tilbud på de produkter, du skal bruge.
+                <br />
+                Få en af vores erfarne specialister til at kontakte dig.
+            </p>
+        </div>
+    </div>
+</div>
+<div class="m-auto responsive container">
+    <div class="main_section">
+        <div class="main_section_news-container">
+            <div class="main_section_news_header">
+                <h3>Nyheder</h3>
+                <hr class="hr-general hr-general-orange">
+            </div>
+            <div class="main_section_news">
+                <div class="main_section_news_bottom-container grid">
+                    @foreach (var item in Model.NewsList)
+                    {
+                        <div class="main_section_news_bottom-container-box">
+                            <a href="@item.NyhedsUrl">
+                                <img src="~/Content/Img/@item.NyhedsImg" alt="@item.NyhedsNavn" />
+                            </a>
+                            <div></div>
+                            <a href="/nyheder" class="m-bot-10 m-top-20 news_link">NYHEDER</a>
+                            <h3>
+                                <a href="@item.NyhedsUrl" class="news_link_specific">@item.NyhedsNavn</a>
+                            </h3>
+                            <hr class="hr-general hr-general-grey" />
+                            <p>@MyCrypt.SubStr(item.NyhedsTekst, 244)</p>
+                        </div>
+                    }
+                </div>
+                <div>
+                    <a href="/nyheder" class="btn"><i class="icon-back-in-time"></i>Gå til vores nyhedsarkiv</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

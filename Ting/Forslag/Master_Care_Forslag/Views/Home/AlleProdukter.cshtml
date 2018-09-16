@@ -1,0 +1,44 @@
+﻿@model Master_Care_Forslag.Models.HomeViewModel
+
+@{
+    ViewBag.Title = Model.Category.KategoriNavn;
+}
+
+<div class="container m-auto responsive">
+    <div class="main_section">
+        <div class="main_section_product_header m-bot-50">
+            <h1>@Model.Category.KategoriNavn</h1>
+        </div>
+        <div class="main_section_products grid">
+            @foreach (var item in Model.ProductList)
+            {
+            <div class="main_section_products-container">
+                <a href="/human-handling-bank/@Model.Category.KategoriUrl/@Model.SubCategoryList.Where(x => x.FK_KategoriID == item.FK_KategoriID).FirstOrDefault().UnderKategoriUrl/produkt/@item.ProduktUrl">
+                    <figure class="main_section_products-container-figure">
+                        <img src="~/Content/Img/Produktbilleder/@item.ProduktImg" alt="@item.ProduktNavn" />
+                        <figcaption>@item.ProduktNavn</figcaption>
+                    </figure>
+                </a>
+                @if (item.VariationAntal > 0)
+                {
+                    <div class="main_section_products-button">
+                        <a href="/human-handling-bank/@Model.Category.KategoriUrl/@Model.SubCategoryList.Where(x => x.FK_KategoriID == item.FK_KategoriID).FirstOrDefault().UnderKategoriUrl/produkt/@item.ProduktUrl"><i class="icon-basket"></i>Vælg variant</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="flex">
+                        <div class="main_section_products-button flex-grow">
+                            <a href="/human-handling-bank/@Model.Category.KategoriUrl/@Model.SubCategoryList.Where(x => x.FK_KategoriID == item.FK_KategoriID).FirstOrDefault().UnderKategoriUrl/produkt/@item.ProduktUrl"><i class="icon-basket"></i>Tilføj til kurv</a>
+                        </div>
+                        <div class="main_section_products-button flex-grow">
+                            <a href="/human-handling-bank/@Model.Category.KategoriUrl/@Model.SubCategoryList.Where(x => x.FK_KategoriID == item.FK_KategoriID).FirstOrDefault().UnderKategoriUrl/produkt/@item.ProduktUrl"><i class="icon-basket"></i>Vis detaljer</a>
+                        </div>
+                    </div>
+                }
+            </div>
+            }
+        </div>
+    </div>
+</div>
+

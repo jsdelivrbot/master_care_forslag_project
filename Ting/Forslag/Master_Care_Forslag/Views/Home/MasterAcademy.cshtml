@@ -1,0 +1,31 @@
+﻿@model Master_Care_Forslag.Models.HomeViewModel
+
+@{
+    ViewBag.Title = "Master Academy";
+}
+<div class="main_section_academy-slider-container">
+    <div class="main_section_academy-slideshow">
+        <img src="~/Content/Img/glide-vendesystemer-1500x430.jpg" alt="Alternate Text" />
+        <div class="main_section_academy-slideshow-caption container responsive m-auto">
+            <h2>@ViewBag.Title</h2>
+        </div>
+    </div>
+</div>
+<div class="container responsive m-auto">
+    <div class="main_section">
+        <div class="main_section_academy_header">
+            <h1>@ViewBag.Title</h1>
+            <hr class="hr-general hr-general-orange">
+        </div>
+        <div class="main_section_academy grid">
+            @foreach (var item in Model.TekstList)
+            {
+                <div>
+                    <p>
+                        @item.Tekst
+                    </p>
+                </div>
+            }
+        </div>
+    </div>
+</div>

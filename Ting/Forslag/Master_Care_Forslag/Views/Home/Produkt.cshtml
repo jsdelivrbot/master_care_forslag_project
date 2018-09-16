@@ -1,0 +1,210 @@
+﻿@model Master_Care_Forslag.Models.HomeViewModel
+
+@{
+    ViewBag.Title = Model.FK_Product_Varation.Produkt.ProduktNavn;
+
+    var kategori = Model.FK_Variation_UnderkategoriList;
+}
+
+<div class="breadcrumb-container">
+    <nav class="container m-auto responsive">
+        <ul class="breadcrumb clearfix">
+            <li>
+                <a href="/">Forside</a>
+            </li>
+            <li>
+                <a href="/human-handling-bank">Human Handling Bank</a>
+            </li>
+            <li>
+                <a href="/human-handling-bank/@Model.FK_Variation_Underkategori.Underkategori.Kategori.KategoriUrl">@Model.FK_Variation_Underkategori.Underkategori.Kategori.KategoriNavn</a>
+            </li>
+            <li>
+                <a href="/human-handling-bank/@Model.FK_Variation_Underkategori.Underkategori.Kategori.KategoriUrl/@Model.FK_Variation_Underkategori.Underkategori.UnderKategoriUrl">@Model.FK_Variation_Underkategori.Underkategori.UnderKategoriNavn</a>
+            </li>
+            <li>
+                <a href="#">@Model.FK_Product_Varation.Produkt.ProduktNavn<span id="VariationNavn"> @Model.FK_Product_Varation.Variation.VariationNavn</span></a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="container m-auto responsive">
+    <div class="main_section">
+        <div class="main_section_product grid">
+            <div class="main_section_product-container">
+                <img id="VariationImg" src="~/Content/Img/Produktbilleder/@Model.FK_Product_Varation.VariationImg" alt="@Model.FK_Product_Varation.Produkt.ProduktNavn @Model.FK_Product_Varation.Variation.VariationNavn" />
+            </div>
+            <div class="main_section_product-container">
+                <h1 class="m-bot-10">@Model.FK_Product_Varation.Produkt.ProduktNavn<span id="VariationNavn"> @Model.FK_Product_Varation.Variation.VariationNavn</span></h1>
+                <p class="m-bot-10">@Model.FK_Product_Varation.Produkt.ProduktTekst</p>
+                <div class="main_section_product-container-info">
+                    @if (Model.FK_Product_VariationList.Count > 0)
+                    {
+                        <div class="main_section_product-container-info-variation m-bot-10 m-top-10 flex">
+                            <span>Variation</span>
+                            <select>
+                                @foreach (var item in Model.FK_Product_VariationList)
+                                {
+                                    <option value="@item.VariationHMInummer">@item.Variation.VariationNavn</option>
+                                }
+                            </select>
+                        </div>
+                    }
+                    <div class="main_section_product-container-info-wrap">
+                        <p id="VariationInfo">@Model.FK_Product_Varation.VariationInfo</p>
+                        <h5 class="m-top-20"><span id="hminr">HMI: @Model.FK_Product_Varation.VariationHMInummer</span></h5>
+                        <h5><span id="varenr">Varenummer: @Model.FK_Product_Varation.VariationVarenummer</span></h5>
+                        <div class="main_section_product-container-quantity m-top-20 flex flex-wrap">
+                            <div>
+                                <input type="button" name="minus" value="-" class="minus" /><input type="text" name="value" value="1" class="quantity" /><input type="button" name="plus" value="+" class="plus" />
+                            </div>
+                            <div>
+                                <button id="btnTilfoej" type="submit">Tilføj til kurv</button>
+                            </div>
+                        </div>
+                        <input id="hmi" type="hidden" value="@Model.FK_Product_Varation.VariationHMInummer" />
+                    </div>
+                </div>
+                <div class="main_section_product-container-info-meta flex">
+                    <span>
+                        Kategorier:
+                        @{
+                            int i = 1;
+                        }
+                        @foreach (var item in kategori)
+                        {
+                            <a href="/human-handling-bank/@Model.FK_Variation_Underkategori.Underkategori.Kategori.KategoriUrl/@item.Underkategori.UnderKategoriUrl">@item.Underkategori.UnderKategoriNavn@(i < kategori.Count ? (Html.Raw(",&nbsp;")) : null)</a>
+                            i++;
+                        }
+                    </span>
+                </div>
+                <div class="main_section_product-container-guide-menu m-top-50">
+                    <button data-id="btnBeskrivelse">Beskrivelse</button><button data-id="btnBrugervejledning">Brugervejledning</button><button data-id="btnVideo">Videoer</button>
+                </div>
+                <div id="btnBeskrivelse" class="main_section_product-container-guide">
+                    <h3>Produktbeskrivelse</h3>
+                    <p class="m-bot-20 m-top-20">@Model.FK_Product_Varation.Produkt.ProduktTekst</p>
+                </div>
+                <div id="btnBrugervejledning" class="main_section_product-container-guide">
+                    <h3>Brugervejledning</h3>
+                    <p class="m-bot-20 m-top-20">Brugervejledninger kommer snart</p>
+                </div>
+                <div id="btnVideo" class="main_section_product-container-guide">
+                    <h3>Videoer</h3>
+                    <p class="m-bot-20 m-top-20">Videoer kommer snart</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("input.plus").click(function () {
+        Counter("+");
+    });
+    $("input.minus").click(function () {
+        Counter("-");
+    });
+    function Counter(m) {
+        var input = $("input.quantity");
+        var quantity = parseInt(input.val());
+        if (m == "+") {
+            if (quantity > 0 && quantity <= 599) {
+                input.val(quantity + 1);
+            }
+        }
+        else if (m == "-") {
+            if (quantity > 1 && quantity <= 600) {
+                input.val(quantity - 1);
+            }
+        }
+    }
+    $("input.quantity").blur(function () {
+        var input = $(this);
+
+        if (input.val() < 1) {
+            input.val(1);
+        }
+        else if (input.val() > 600) {
+            input.val(600);
+        }
+        else {
+            input.val(1);
+        }
+
+    });
+
+    var timer = "";
+
+    $("button#btnTilfoej").click(function () {
+        var id = $("input#hmi").val();
+
+        clearTimeout(timer);
+
+        timer = setTimeout(function () {
+            tilfoejkurv();
+        }, 200);
+    });
+
+
+    function tilfoejkurv() {
+        var data = {
+            "HMInr": $("input#hmi").val(),
+            "Antal" : $("input.quantity").val()
+        }
+
+        $.ajax({
+            method: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            url: "/Cart",
+            data: JSON.stringify(data),
+            success: function (data) {
+
+            }
+        });
+    }
+
+    $(window).on('load', function () {
+        $("select").on('change', function () {
+            GetData($(this).val());
+        })
+    });
+    function GetData(selectVal) {
+        $.ajax({
+            method: "GET",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            url: "/ProduktData?VariationID=" + selectVal,
+            success: function (data) {
+                if (data.success == true) {
+                    var hminr = data.variation.VariationHMInummer;
+                    var varenr = data.variation.VariationVarenummer;
+                    var variinfo = data.variation.VariationInfo;
+                    var varinavn = data.variation.Variation.VariationNavn;
+                    var varibillede = data.variation.VariationImg;
+                    var produktnavn = data.variation.Produkt.ProduktNavn
+
+                    $("input#hmi").val(hminr);
+                    $("#VariationImg").prop("alt", produktnavn + " " + varinavn);
+                    $("#VariationImg").attr("src", "/Content/Img/" + varibillede);
+                    $("span#VariationNavn").text(" " + varinavn);
+                    $("p#VariationInfo").text(variinfo);
+                    $("span#hminr").text("HMI: " + hminr);
+                    $("span#varenr").text("Varenummer: " + varenr);
+                    console.log(data);
+                }
+                else {
+                    console.log("ERROR");
+                }
+            }
+        });
+    }
+    $(document).ready(function () {
+        $(".breadcrumb li:not(:last-child) a").css("color", "#f36f26");
+        $('.main_section_product-container-guide-menu').on('click', 'button:not(.current)', function () {
+            $('.current').not($(this).closest('button').addClass('current')).removeClass('current');
+            $('.main_section_product-container-guide:visible').hide();
+            $('.main_section_product-container-guide[id=' + $(this).attr('data-id') + ']').show();
+        }).find('button:first').click();
+    });
+</script>

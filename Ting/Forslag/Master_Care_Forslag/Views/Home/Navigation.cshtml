@@ -1,0 +1,61 @@
+﻿@model Master_Care_Forslag.Models.HomeViewModel
+
+@{
+    Layout = null;
+}
+
+<nav class="container m-auto responsive">
+    <ul class="clearfix">
+        @foreach (var item in Model.MenuList)
+        {
+            var sub = Model.SubMenuList.Where(c => c.FK_MenuID == item.ID).ToList();
+        <li class="@(sub.Count > 0 || item.VisKategori == true ? "dropdown" : null)">
+            <a href="@item.MenuUrl">@item.MenuNavn</a>
+            @if (sub.Count > 0)
+            {
+                <ul class="clearfix">
+                    @foreach (var subitem in sub)
+                    {
+                        <li>
+                            <a href="@subitem.SubMenuUrl">@subitem.SubMenuNavn</a>
+                        </li>
+                    }
+                </ul>
+            }
+            else if (item.VisKategori == true)
+            {
+                <ul class="clearfix">
+                    @foreach (var subitem in Model.CategoryList)
+                    {
+                        <li>
+                            <a href="@Url.Action("Kategori", "Home", new { id = subitem.KategoriUrl })">@subitem.KategoriNavn</a>
+                        </li>
+                    }
+                </ul>
+            }
+        </li>
+
+        }
+        <li class="language_flag">
+            <a href="#">
+                <img src="~/Content/Img/da.png" alt="Dansk" />
+            </a>
+        </li>
+        <li class="language_flag">
+            <a href="#">
+                <img src="~/Content/Img/en.png" alt="Engelsk" />
+            </a>
+        </li>
+        <li class="language_flag">
+            <a href="#">
+                <img src="~/Content/Img/de.png" alt="Tysk" />
+            </a>
+        </li>
+        <li id="search_button">
+            <button type="button" id="search-btn"><i class="icon-search"></i></button>
+        </li>
+    </ul>
+    <div id="search_container">
+        <input type="search" name="search" placeholder="Søg" /><button type="submit"><i class="icon-search"></i></button>
+    </div>
+</nav>

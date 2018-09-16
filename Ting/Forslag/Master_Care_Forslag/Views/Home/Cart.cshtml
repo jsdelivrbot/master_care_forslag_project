@@ -1,0 +1,101 @@
+﻿@model Master_Care_Forslag.Models.HomeViewModel
+
+@{
+    ViewBag.Title = "Ønskeseddel";
+}
+
+<div class="container responsive m-auto">
+    <div class="main_section">
+        <div class="main_section_cart-container">
+            <div class="main_section_cart-container-info">
+                <div class="main_section_cart-container-info-header">
+                    <h1>Min ønskeseddel</h1>
+                    <hr class="hr-general hr-general-orange">
+                </div>
+                <p>Dette er en oversigt over din ønskeseddel. Når vi har modtaget din ordre, vender vi tilbage til dig med et tilbud.</p>
+                <div class="main_section_cart-container-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fjern fra ønskeseddel</th>
+                                <th>Billede</th>
+                                <th>HMInr</th>
+                                <th>Varenummer</th>
+                                <th>Produkt</th>
+                                <th>Antal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><img src="#" alt="Fjern dette produkt" /></td>
+                                <td><img src="#" alt="Alternate Text" /></td>
+                                <td>81108</td>
+                                <td>002-1955</td>
+                                <td>
+                                    <a href="#">Quick ON</a>
+                                    Variation: Quick ON Box Stretch - 120
+                                </td>
+                                <td>
+                                    <div class="main_section_cart-container-quantity m-top-20 flex flex-wrap">
+                                        <div>
+                                            <input type="button" name="minus" value="-" class="minus" /><input type="text" name="value" value="1" class="quantity" /><input type="button" name="plus" value="+" class="plus" />
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="submit">Gå til kassen</button>
+                    <p>@Session["Kurv"].ToString()</p>
+                    @if (Model.KurvViewModel != null)
+                    {
+                        foreach (var item in Model.KurvViewModel)
+                        {
+                            <p>@item.Antal</p>
+                        }
+                    }
+                    else {
+                        <p>FAIL</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("input.plus").click(function () {
+        Counter("+");
+    });
+    $("input.minus").click(function () {
+        Counter("-");
+    });
+    function Counter(m) {
+        var input = $("input.quantity");
+        var quantity = parseInt(input.val());
+        if (m == "+") {
+            if (quantity > 0 && quantity <= 599) {
+                input.val(quantity + 1);
+            }
+        }
+        else if (m == "-") {
+            if (quantity > 1 && quantity <= 600) {
+                input.val(quantity - 1);
+            }
+        }
+    }
+    $("input.quantity").blur(function () {
+        var input = $(this);
+
+        if (input.val() < 1) {
+            input.val(1);
+        }
+        else if (input.val() > 600) {
+            input.val(600);
+        }
+        else {
+            input.val(1);
+        }
+
+    });
+</script>
